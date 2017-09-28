@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import HeroSlide from './HeroSlide';
 
+import Logo from '../images/logo-white.png'
+
 import './HeroCarousel.css';
 
 class HeroCarousel extends Component {
@@ -14,6 +16,10 @@ class HeroCarousel extends Component {
       'hero-carousel-slide-4',
       'hero-carousel-slide-5'
     ]
+
+    this.logoStyles = {
+      backgroundImage: `url('${Logo}')`
+    }
   }
   render() {
     return (
@@ -27,6 +33,7 @@ class HeroCarousel extends Component {
               }
             </ul>
           </div>
+          <div className="logo" style={ this.logoStyles }></div>
         </div>
       </div>
     )
