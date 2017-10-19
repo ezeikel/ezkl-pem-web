@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
-import HeroCarousel from '../components/HeroCarousel';
+import Header from './components/header/Header';
+import HeroCarousel from './components/hero-carousel/HeroCarousel';
 
 class App extends Component {
   render() {
     return (
       <div className="container-fluid">
+        <Header />
         <HeroCarousel />
       </div>
     );

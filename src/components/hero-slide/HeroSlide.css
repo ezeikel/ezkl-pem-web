@@ -1,13 +1,13 @@
 .logo {
-  width: 200px;
-  height: 100px;
+  width: 130px;
+  height: 65px;
   position: absolute;
   top: 20px;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   right: 50%;
-  margin-right: -100px;
+  margin-right: -65px;
 }
 
 .slides {

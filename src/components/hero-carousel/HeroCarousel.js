@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import HeroSlide from './HeroSlide';
+import HeroSlide from '../hero-slide/HeroSlide';
 
-import Logo from '../images/logo-white.png'
+import Logo from '../../images/logo-white.png'
 
 import './HeroCarousel.css';
 

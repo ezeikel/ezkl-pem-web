@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import SlideOne from '../images/hero-carousel-slide-1.jpg';
-import SlideTwo from '../images/hero-carousel-slide-2.jpg';
-import SlideThree from '../images/hero-carousel-slide-3.jpg';
-import SlideFour from '../images/hero-carousel-slide-4.jpg';
-import SlideFive from '../images/hero-carousel-slide-5.jpg';
+import SlideOne from '../../images/hero-carousel-slide-1.jpg';
+import SlideTwo from '../../images/hero-carousel-slide-2.jpg';
+import SlideThree from '../../images/hero-carousel-slide-3.jpg';
+import SlideFour from '../../images/hero-carousel-slide-4.jpg';
+import SlideFive from '../../images/hero-carousel-slide-5.jpg';
 
 import './HeroSlide.css';
 
