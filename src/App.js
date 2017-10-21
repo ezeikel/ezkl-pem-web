@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Header from './components/header/Header';
+import TopNav from './components/top-nav/TopNav';
 import HeroCarousel from './components/hero-carousel/HeroCarousel';
 
 class App extends Component {
@@ -8,7 +9,8 @@ class App extends Component {
     return (
       <div className="container-fluid">
         <Header />
-        <HeroCarousel />
+        <TopNav />
+        {/* <HeroCarousel /> */}
       </div>
     );
   }

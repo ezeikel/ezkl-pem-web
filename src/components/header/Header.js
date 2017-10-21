@@ -3,8 +3,8 @@ import './Header.css';
 
 const Header = (props) => {
   return (
-    <header className="header">
-      Header works!
+    <header className="header row">
+      <div className="logo"></div>
     </header>
   )
 }

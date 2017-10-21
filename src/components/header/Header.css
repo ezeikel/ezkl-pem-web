@@ -1,4 +1,15 @@
 .header {
-  position: absolute;
+  display: flex;
+  justify-content: center;
   color: var(--color-white);
+}
+
+.logo {
+  width: 130px;
+  height: 65px;
+  margin-top: var(--spacing-medium);
+  background-image: url('../../images/ezklpem-logo.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }

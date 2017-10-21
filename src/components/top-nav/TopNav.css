@@ -1,0 +1,14 @@
+.top-nav .top-nav__links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.top-nav .link {
+  padding: var(--spacing-small);
+}
+
+.top-nav .link a {
+  color: var(--color-black);
+}
