@@ -11,6 +11,7 @@ class App extends Component {
     super();
 
     this.getImageUrls = this.getImageUrls.bind(this);
+    this.addLike = this.addLike.bind(this);
 
     // getinitialState
     this.state = {
@@ -20,23 +21,27 @@ class App extends Component {
   }
 
   getImageUrls(collection) {
-    console.log('getting image urls...');
     let images = {...this.state.images};
     const storage = base.initializedApp.firebase_.storage();
     const storageRef = storage.ref();
-
-    console.log({collection});
 
     for (let row in collection) {
       const obj = collection[row];
       const imageRef = storageRef.child(`images/${obj.src}.jpg`);
 
-      imageRef.getDownloadURL().then(url => {
-        obj.url = url;
-        images = collection;
-        this.setState({ images });
-      });
+      imageRef.getDownloadURL()
+        .then(url => {
+          obj.url = url;
+          images = collection;
+          this.setState({ images });
+        });
     }
+  }
+
+  addLike(key) {
+    const images = {...this.state.images};
+    images[key].likes = images[key].likes + 1;
+    this.setState({ images });
   }
 
   componentWillMount() {
@@ -70,7 +75,7 @@ class App extends Component {
           {
             Object
               .keys(this.state.images)
-              .map(key => <Image key={key} details={this.state.images[key]} />)
+              .map(key => <Image key={key} index={key} addLike={this.addLike} details={this.state.images[key]} />)
           }
         </ul>
       </div>

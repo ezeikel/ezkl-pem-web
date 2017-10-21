@@ -59,5 +59,6 @@ img {
 /* TODO: Move this somewhere else */
 .images {
   display: flex;
+  justify-content: center;
   /*flex-direction: column; */
 }
