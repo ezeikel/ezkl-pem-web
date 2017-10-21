@@ -4,12 +4,13 @@ import './Image.css';
 
 class HeroCarousel extends Component {
   render() {
+    const details = this.props.details;
     return (
-      <div className="image">
-        <span>Title: {this.props.details.title}</span>
-        <span>Photographer: {this.props.details.photographer}</span>
-        📸
-      </div>
+      <li className="image">
+        <h3>{details.title}</h3>
+        <img src={details.url} alt={details.title} />
+        <span>Taken by: {details.photographer}</span>
+      </li>
     )
   }
 }

@@ -50,3 +50,14 @@ ul {
 a, a:link, a:active, a:visited, a:hover {
   text-decoration: none;
 }
+
+img {
+  max-width: 100%;
+}
+
+
+/* TODO: Move this somewhere else */
+.images {
+  display: flex;
+  /*flex-direction: column; */
+}

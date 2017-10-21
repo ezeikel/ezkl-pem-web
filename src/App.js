@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Header from './components/header/Header';
 import TopNav from './components/top-nav/TopNav';
 import Image from './components/image/Image';
-import HeroCarousel from './components/hero-carousel/HeroCarousel';
 
 import base from './base';
 
@@ -11,7 +10,7 @@ class App extends Component {
   constructor() {
     super();
 
-    this.updateImages = this.updateImages.bind(this);
+    this.getImageUrls = this.getImageUrls.bind(this);
 
     // getinitialState
     this.state = {
@@ -20,22 +19,31 @@ class App extends Component {
     };
   }
 
+  getImageUrls(collection) {
+    console.log('getting image urls...');
+    let images = {...this.state.images};
+    const storage = base.initializedApp.firebase_.storage();
+    const storageRef = storage.ref();
+
+    console.log({collection});
+
+    for (let row in collection) {
+      const obj = collection[row];
+      const imageRef = storageRef.child(`images/${obj.src}.jpg`);
+
+      imageRef.getDownloadURL().then(url => {
+        obj.url = url;
+        images = collection;
+        this.setState({ images });
+      });
+    }
+  }
+
   componentWillMount() {
     this.ref = base.syncState('images', {
       context: this,
-      state: 'images',
-      asArray: true
+      state: 'images'
     });
-  }
-
-  updateImages(url) {
-    const images = {...this.state.images};
-    images.image1 = {
-      title: 'Bonkaz',
-      photographer: 'EZKL PEM',
-      src: url
-    }
-    this.setState({ images: images });
   }
 
   componentWillUnmount() {
@@ -43,14 +51,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const storage = base.initializedApp.firebase_.storage();
-    const storageRef = storage.ref();
-    const imagesRef = storageRef.child('images');
-    const testImageRef = storageRef.child('images/bonkaz-camden-assembly.jpg');
-
-    testImageRef.getDownloadURL().then(url => {
-      this.updateImages(url);
-      console.log(url);
+    base.fetch('images', {
+      context: this,
+      isArray: true
+    }).then(data => {
+      this.getImageUrls(data);
+    }).catch(error => {
+      // handle error
     });
   }
 
