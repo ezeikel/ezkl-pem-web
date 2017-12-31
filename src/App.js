@@ -13,7 +13,7 @@ class App extends Component {
       ref: ''
     };
 
-  getImageUrls = (collection) => {
+  getImageUrls = async (collection) => {
     let images = {...this.state.images};
     const storage = base.initializedApp.firebase_.storage();
     const storageRef = storage.ref();
@@ -22,12 +22,10 @@ class App extends Component {
       const obj = collection[row];
       const imageRef = storageRef.child(`images/${obj.src}.jpg`);
 
-      imageRef.getDownloadURL()
-        .then(url => {
-          obj.url = url;
-          images = collection;
-          this.setState({ images });
-        });
+      const url = await imageRef.getDownloadURL();
+      obj.url = url;
+      images = collection;
+      this.setState({ images });
     }
   }
 
@@ -50,16 +48,12 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    try {
-      const data = await base.fetch('images', {
-        context: this,
-        isArray: true
-      });
-      
-      this.getImageUrls(data);
-    } catch (error) {
-      console.error(error);
-    }
+    const data = await base.fetch('images', {
+      context: this,
+      isArray: true
+    });
+
+    this.getImageUrls(data);
   }
 
   render() {
