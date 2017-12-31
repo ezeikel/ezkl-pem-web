@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Header from './containers/Header/Header';
 import TopNav from './containers/TopNav/TopNav';
-import Image from './containers/Image/Image';
+import Images from './containers/Images/Images';
 
 import base from './base';
 
@@ -61,13 +61,7 @@ class App extends Component {
       <div className="container-fluid">
         <Header />
         <TopNav />
-        <ul className="images">
-          {
-            Object
-              .keys(this.state.images)
-              .map(key => <Image key={key} index={key} addLike={this.addLike} details={this.state.images[key]} />)
-          }
-        </ul>
+        <Images images={this.state.images} addLike={this.addLike} />
       </div>
     );
   }
