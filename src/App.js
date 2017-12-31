@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Header from './components/header/Header';
-import TopNav from './components/top-nav/TopNav';
-import Image from './components/image/Image';
+import Header from './containers/Header/Header';
+import TopNav from './containers/TopNav/TopNav';
+import Image from './containers/Image/Image';
 
 import base from './base';
 
