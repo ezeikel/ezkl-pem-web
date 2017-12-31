@@ -49,15 +49,17 @@ class App extends Component {
     base.removeBinding(this.state.ref);
   }
 
-  componentDidMount() {
-    base.fetch('images', {
-      context: this,
-      isArray: true
-    }).then(data => {
+  async componentDidMount() {
+    try {
+      const data = await base.fetch('images', {
+        context: this,
+        isArray: true
+      });
+      
       this.getImageUrls(data);
-    }).catch(error => {
-      // handle error
-    });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {

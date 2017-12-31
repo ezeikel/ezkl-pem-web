@@ -1,8 +1,7 @@
 import React from 'react';
 import './TopNav.css';
 
-const TopNav = (props) => {
-  return (
+const TopNav = () => (
     <nav className="nav top-nav row">
       <ul className="top-nav__links">
         <li className="link"><a href="">Photos</a></li>
@@ -10,7 +9,6 @@ const TopNav = (props) => {
         <li className="link"><a href="">About</a></li>
       </ul>
     </nav>
-  )
-}
+)
 
 export default TopNav;

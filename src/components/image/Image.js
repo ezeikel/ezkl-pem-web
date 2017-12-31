@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './Image.css';
 
-class HeroCarousel extends Component {
-  render() {
-    const { details, index, addLike } = this.props;
+const Image = (props) => {
+    const { details, index, addLike } = props;
     return (
       <li className="image">
         <h3>{details.title}</h3>
@@ -14,7 +13,6 @@ class HeroCarousel extends Component {
         <h1>{details.likes}</h1>
       </li>
     )
-  }
 }
 
-export default HeroCarousel;
+export default Image;
