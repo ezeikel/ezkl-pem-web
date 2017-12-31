@@ -7,20 +7,13 @@ import Image from './components/image/Image';
 import base from './base';
 
 class App extends Component {
-  constructor() {
-    super();
-
-    this.getImageUrls = this.getImageUrls.bind(this);
-    this.addLike = this.addLike.bind(this);
-
-    // getinitialState
-    this.state = {
+    state = {
       images: {},
-      videos: {}
+      videos: {},
+      ref: ''
     };
-  }
 
-  getImageUrls(collection) {
+  getImageUrls = (collection) => {
     let images = {...this.state.images};
     const storage = base.initializedApp.firebase_.storage();
     const storageRef = storage.ref();
@@ -38,21 +31,22 @@ class App extends Component {
     }
   }
 
-  addLike(key) {
+  addLike = (key) => {
     const images = {...this.state.images};
     images[key].likes = images[key].likes + 1;
     this.setState({ images });
   }
 
   componentWillMount() {
-    this.ref = base.syncState('images', {
+    const ref = base.syncState('images', {
       context: this,
       state: 'images'
     });
+    this.setState({ ref });
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.ref);
+    base.removeBinding(this.state.ref);
   }
 
   componentDidMount() {
