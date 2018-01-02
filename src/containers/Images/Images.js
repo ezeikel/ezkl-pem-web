@@ -10,9 +10,12 @@ class Images extends Component {
     };
 
     getImageUrls = async (collection) => {
-        let images = { ...this.state.images };
+        // firebase database
         const storage = base.initializedApp.firebase_.storage();
+        // firebase storage
         const storageRef = storage.ref();
+
+        let images = { ...this.state.images };
 
         for (let row in collection) {
             const obj = collection[row];
