@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Header from './containers/Header/Header';
-import TopNav from './containers/TopNav/TopNav';
-import Main from './containers/Main/Main';
+import Header from '../Header/Header';
+import TopNav from '../TopNav/TopNav';
+import Main from '../Main/Main';
 
 const App = () => (
   <div className="container-fluid">
