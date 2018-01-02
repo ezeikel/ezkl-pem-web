@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Images from  '../Images/Images';
+import Images from  '../../components/Images/Images';
 import Videos from  '../Videos/Videos';
 
 const Main = () => (
