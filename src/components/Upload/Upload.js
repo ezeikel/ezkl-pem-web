@@ -41,6 +41,7 @@ class Upload extends Component {
                             filename: file.name,
                             title: 'Test Title',
                             caption: 'Test Caption',
+                            tags: 'grime, music, test',
                             url,
                             likes: 0
                         }
