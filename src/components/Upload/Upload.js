@@ -85,7 +85,6 @@ class Upload extends Component {
     }
 
     componentWillUnmount() {
-        console.log('Will unmount...');
         const fileBtn = document.querySelector('.file-button');
 
         fileBtn.removeEventListener('change', this.onFileChange, true);
