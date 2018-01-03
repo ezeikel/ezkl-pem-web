@@ -1,33 +1,14 @@
-import React, { Component } from "react";
-import Image from "./Image/Image";
-import Upload from "../Upload/Upload";
+import React, { Component } from 'react';
+import Image from './Image/Image';
+import Upload from '../Upload/Upload';
 
 import base from '../../base';
 
 class Images extends Component {
     state = {
-        images: {},
+        images: [],
         ref: ''
     };
-
-    getImageUrls = async (collection) => {
-        // firebase database
-        const storage = base.initializedApp.firebase_.storage();
-        // firebase storage
-        const storageRef = storage.ref();
-
-        let images = { ...this.state.images };
-
-        for (let row in collection) {
-            const obj = collection[row];
-            const imageRef = storageRef.child(`images/${obj.src}.jpg`);
-
-            const url = await imageRef.getDownloadURL();
-            obj.url = url;
-            images = collection;
-            this.setState({ images });
-        }
-    }
 
     addLike = (key) => {
         const images = { ...this.state.images };
@@ -53,13 +34,13 @@ class Images extends Component {
             isArray: true
         });
 
-        this.getImageUrls(data);
+        this.setState({images: data});
     }
 
     render() {
         return (
             <div>
-                <ul className="images">
+                <ul className='images'>
                     {
                         Object
                             .keys(this.state.images)

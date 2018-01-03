@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuidv4 from 'uuid/v4';
 
 import base from '../../base';
 
@@ -14,7 +15,7 @@ class Upload extends Component {
         const uploader = document.querySelector('.uploader');
         const fileBtn = document.querySelector('.file-button');
 
-        fileBtn.addEventListener('change', (e) => {
+        fileBtn.addEventListener('change', async (e) => {
             // get file
             const file = e.target.files[0];
 
@@ -32,7 +33,19 @@ class Upload extends Component {
                     uploader.value = percentage;
                 },
                 (err) => console.error(err),
-                () => {
+                async () => {
+                    const url = await storageRef.getDownloadURL();
+                    const id = uuidv4();
+                    await base.post(`images/${id}`, {
+                        data: {
+                            filename: file.name,
+                            title: 'Test Title',
+                            caption: 'Test Caption',
+                            url,
+                            likes: 0
+                        }
+                    });
+
                     this.setState({uploading: false});
                 }
             );
