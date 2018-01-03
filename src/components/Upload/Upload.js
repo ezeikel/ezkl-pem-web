@@ -5,7 +5,26 @@ import base from '../../base';
 
 class Upload extends Component {
     state = {
-        uploading: false
+        uploading: false,
+        file: {
+            title: '',
+            caption: '',
+            tags: '',
+            likes: 0
+        }
+    }
+
+    handleFormInputChange = (e) => {
+        const property = e.target.name
+        this.setState({
+            file: {
+                [e.target.name]: e.target.value
+            }
+        });
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
     }
 
     componentDidMount() {
@@ -38,12 +57,9 @@ class Upload extends Component {
                     const id = uuidv4();
                     await base.post(`images/${id}`, {
                         data: {
+                            ...this.state.file,
                             filename: file.name,
-                            title: 'Test Title',
-                            caption: 'Test Caption',
-                            tags: 'grime, music, test',
-                            url,
-                            likes: 0
+                            url
                         }
                     });
 
@@ -63,7 +79,16 @@ class Upload extends Component {
         return (
             <div>
                 <progress value="0" max="100" className="uploader">0%</progress>
-                <input type="file" name="upload" className="file-button" />
+                <form onSubmit={this.handleSubmit}>
+                    <input type="file" name="upload" className="file-button" />
+                    <label htmlFor="name">Title:</label>
+                    <input type="text" name="title" value={this.state.file.title} onChange={this.handleFormInputChange} />
+                    <label htmlFor="caption">Caption</label>
+                    <input type="text" name="caption" value={this.state.file.caption} onChange={this.handleFormInputChange} />
+                    <label htmlFor="tags">Tags</label>
+                    <input type="text" name="tags" value={this.state.file.tags} onChange={this.handleFormInputChange} />
+                    <input type="submit" value="Save" />
+                </form>
             </div>
         )
     }
