@@ -6,18 +6,20 @@ import base from '../../base';
 class Upload extends Component {
     state = {
         uploading: false,
-        file: {
+        upload: {
+            filename: '',
             title: '',
             caption: '',
             tags: '',
             likes: 0
-        }
+        },
+        file: {}
     }
 
     handleFormInputChange = (e) => {
-        const property = e.target.name
         this.setState({
-            file: {
+            upload: {
+                ...this.state.upload,
                 [e.target.name]: e.target.value
             }
         });
@@ -25,48 +27,68 @@ class Upload extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-    }
 
-    componentDidMount() {
+        const uploader = document.querySelector('.uploader');
+
         // firebase database
         const storage = base.initializedApp.firebase_.storage();
 
-        const uploader = document.querySelector('.uploader');
+        // create a storage ref
+        const storageRef = storage.ref(`images/${this.state.file.name}`);
+
+        // upload file
+        const task = storageRef.put(this.state.file);
+
+        // update progress bar
+        task.on('state_changed',
+            (snapshot) => {
+                this.setState({
+                    uploading: true
+                });
+                const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                uploader.value = percentage;
+            },
+            (err) => console.error(err),
+            async() => {
+                const url = await storageRef.getDownloadURL();
+                const id = uuidv4();
+
+                await base.post(`images/${id}`, {
+                    data: {
+                        ...this.state.upload,
+                        url
+                    }
+                });
+
+                this.setState({
+                    uploading: false
+                });
+            }
+        );
+    }
+
+    onFileChange = (e) => {
+        this.setState({
+            file: e.target.files[0],
+            upload: {
+                ...this.state.upload,
+                filename: e.target.files[0].name
+            }
+        });
+    }
+
+    componentDidMount() {
         const fileBtn = document.querySelector('.file-button');
 
-        fileBtn.addEventListener('change', async (e) => {
-            // get file
-            const file = e.target.files[0];
+        // get file
+        fileBtn.addEventListener('change', this.onFileChange);
+    }
 
-            // create a storage ref
-            const storageRef = storage.ref(`images/${file.name}`);
+    componentWillUnmount() {
+        console.log('Will unmount...');
+        const fileBtn = document.querySelector('.file-button');
 
-            // upload file
-            const task = storageRef.put(file);
-
-            // update progress bar
-            task.on('state_changed',
-                (snapshot) => {
-                    this.setState({uploading: true});
-                    const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    uploader.value = percentage;
-                },
-                (err) => console.error(err),
-                async () => {
-                    const url = await storageRef.getDownloadURL();
-                    const id = uuidv4();
-                    await base.post(`images/${id}`, {
-                        data: {
-                            ...this.state.file,
-                            filename: file.name,
-                            url
-                        }
-                    });
-
-                    this.setState({uploading: false});
-                }
-            );
-        });
+        fileBtn.removeEventListener('change', this.onFileChange, true);
     }
 
     componentDidUpdate() {
@@ -82,12 +104,12 @@ class Upload extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <input type="file" name="upload" className="file-button" />
                     <label htmlFor="name">Title:</label>
-                    <input type="text" name="title" value={this.state.file.title} onChange={this.handleFormInputChange} />
+                    <input type="text" name="title" value={this.state.upload.title} onChange={this.handleFormInputChange} />
                     <label htmlFor="caption">Caption</label>
-                    <input type="text" name="caption" value={this.state.file.caption} onChange={this.handleFormInputChange} />
+                    <input type="text" name="caption" value={this.state.upload.caption} onChange={this.handleFormInputChange} />
                     <label htmlFor="tags">Tags</label>
-                    <input type="text" name="tags" value={this.state.file.tags} onChange={this.handleFormInputChange} />
-                    <input type="submit" value="Save" />
+                    <input type="text" name="tags" value={this.state.upload.tags} onChange={this.handleFormInputChange} />
+                    <input type="submit" value="Submit" />
                 </form>
             </div>
         )
